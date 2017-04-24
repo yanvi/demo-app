@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "GetData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetData</h2>
+
+<input type="button" name="btnclick" id="btnclick" value="Click me" />
+
+
+<script type="text/javascript">
+    var chk = false;
+    $("#btnclick").click(function () {
+        if (chk) {
+            $("#btnclick").removeClass("red");
+            $("#btnclick").addClass("green");
+            chk = true;
+        }
+        else {
+            $("#btnclick").removeClass("green");
+            $("#btnclick").addClass("red");
+            chk = false;
+        }
+    });
+
+</script>
+<style type="text/css">
+    .red {
+        color :red;
+    }
+    .green {
+        color:green;
+    }
+</style>

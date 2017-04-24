@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Upload</h2>
+<div>
+    @using(Html.BeginForm("main","Register" , FormMethod.Post)){
+    
+        <input type="submit" value="Data" />
+    }
+
+</div>
+
+<div>
+    @using (Html.BeginForm("Upload", "Register", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <span>Select File:</span>
+    <input type="file" name="postedFile" id="postedFile"  multiple/>
+        <hr />
+        <input type="submit" value="Upload" />
+        <br />
+       @*<img id="image" style=" width:100px; height:100px ;" />*@
+        <div id="imageHolder"></div>
+        <span style="color:green">@ViewBag.Message</span>
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#image").hide();
+        });
+        document.getElementById("postedFile").onchange = function () {
+            debugger;
+            var files = this.files.length;
+            var image_holder = $("#imageHolder");
+            image_holder.empty();
+            for (var i = 0; i < files; i++) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("<img />", {
+                        "src": e.target.result,
+                        "class": "thumb-image",
+                        "width": "100px",
+                        "height": "100px",
+                        "name": "postedFiles"
+                    }).appendTo(image_holder);
+                }
+                image_holder.show();
+                reader.readAsDataURL($(this)[0].files[i]);
+            }
+           
+        };
+       
+    </script>
+</div>
+
+
+

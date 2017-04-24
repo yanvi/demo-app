@@ -1,0 +1,59 @@
+﻿@model MVCDemoApp.Models.AssignRoleVM
+
+@{
+    ViewBag.Title = "AddRoleToUser";
+}
+
+<h2>AddRoleToUser</h2>
+
+@{
+    if (ViewBag.Message != null)
+    {
+        if (ViewBag.Message == "Success")
+        {
+            <div class=" alert-success "> Role Assign to user Successfully</div>
+        }
+        else if (ViewBag.Message == "Fail")
+        {
+            <div class="alert-warning"> Role already assign to user</div>
+        }
+    }
+
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>AssignRoleVM</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RoleName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("RoleName", Model.RolesList, "select")
+                @Html.ValidationMessageFor(model => model.RoleName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("UserName", Model.Userlist, "select")
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

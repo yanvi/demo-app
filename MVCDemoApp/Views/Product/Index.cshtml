@@ -1,0 +1,83 @@
+﻿@model PagedList.IPagedList<MVCDemoApp.Models.Product>
+    @using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateProduct","Product")
+    @Html.ActionLink("GetJsonData", "GetAllproduct", "Product")
+    
+</p>
+<div>
+    @using (Html.BeginForm("GetAllproduct", "Product", FormMethod.Post))
+{
+    <input type="submit" name="btnsubmit" value="GetAllProduct" />
+}
+</div>
+@using (Html.BeginForm("Index", "Product", new { SearchString = ViewBag.SearString }, FormMethod.Get))
+{
+    @Html.Label("Serch")
+    @Html.TextBox("searchString", ViewBag.SearchString is string)
+    <input type="submit" name="btnSearch" value="Search" />
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Name", "Index", new { SortOrder = ViewBag.NameSortOrder, CurrentFilter = ViewBag.CurrentFilter })
+           @* @Html.DisplayNameFor(model => model.Name)*@
+        </th>
+        <th>
+            @Html.ActionLink("Category", "Index", "Product", new { SortOrder = ViewBag.CategorySortOrder, CurrentFilter = ViewBag.CurrentFilter })
+           @* @Html.DisplayNameFor(model => model.Category)*@
+        </th>
+        <th>
+            Price
+            @*@Html.DisplayNameFor(model => model.Price)*@
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    using (Html.BeginForm("DeleteProduct", "Product", new { ProductId = item.Id }, FormMethod.Post, new { @class = "a" }))
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+    <input type="submit" name="btnDelete" value="Delete" class="a" onclick='return confirm("Are you sure want to delete product @item.Name")' />
+            @*fnconfirm('@item.Name'); *@
+        </td>
+    </tr>
+}
+}
+
+</table>
+
+
+<br />
+page @(Model.PageCount<Model.PageNumber?0:Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page =>Url.Action("Index",new { page, sortOrder = ViewBag.CurrentFilter}))
+
+
+<style>
+    .a {
+        color: #428bca;
+        text-decoration: none;
+    }
+</style>
+

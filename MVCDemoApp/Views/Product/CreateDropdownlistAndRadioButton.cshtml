@@ -1,0 +1,11 @@
+﻿@using System.Web.Mvc
+@{
+    ViewBag.Title = "CreateDropdownlistAndRadioButton";
+}
+
+<h2>CreateDropdownlistAndRadioButton</h2>
+Gender: @Html.RadioButton("rbtn", "Male", new  {@checked =true })Male
+@Html.RadioButton("rbtn","Female", new { @checked=true})Female
+
+
+

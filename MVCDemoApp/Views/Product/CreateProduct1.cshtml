@@ -1,0 +1,33 @@
+﻿@model MVCDemoApp.Models.Product
+@{
+    ViewBag.Title = "CreateProduct";
+}
+
+<h2>CreateProduct</h2>
+@using (@Html.BeginForm("CreateProduct", "Product", FormMethod.Post))
+{
+
+@Html.LabelFor(p => p.Name)
+
+@Html.EditorFor(p => p.Name)
+@Html.ValidationMessageFor(p=>p.Name)
+    <br />
+
+@Html.LabelFor(p => p.Category)
+
+@Html.EditorFor(p => p.Category)
+    @Html.ValidationMessageFor(p=>p.Category)
+    <br />
+
+@Html.LabelFor(p => p.Price)
+
+@Html.EditorFor(p => p.Price)
+@Html.ValidationMessageFor(p=>p.Price)
+    <br />
+    <input type="submit" name="btnsubmit" value="Submit" />
+    <input type="reset" name="btncancel" value="Cancel" />
+}
+
+
+
+

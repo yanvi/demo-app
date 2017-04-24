@@ -1,0 +1,199 @@
+﻿
+@{
+    ViewBag.Title = "Index2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<html >
+    <head>
+       <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/jstree.min.js"></script>
+
+        <title></title>
+    </head>
+<body>
+    
+    <div ng-app="myApp">
+        <select ng-controller="myCtrl" ng-model="selectItem">
+            <option ng-repeat=" item in names " value="{{item.name}}">{{item.name}}</option>
+        </select>
+        <h1>You have selected {{selectItem}}</h1>
+        <table ng-controller="myCtrl">
+            <thead>
+                <tr>
+                    <th ng-click="filterClick('name') ">Name</th>
+                    <th ng-click="filterClick('course') ">Course</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="n in names | orderBy: ft">
+                    <td>
+                        {{n.name}}
+                    </td>
+                    <td>
+                        {{n.course}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <ul ng-controller="myCtrl">
+
+            <li ng-repeat=" n in names | filter:n">
+                name:  <span> {{n.name}}</span> ,
+                Course:  <span> {{n.course}}</span><br />
+            </li>
+        </ul>
+        <input type="text" ng-model="n" />
+        <div ng-controller="myCtrl2">
+            <input type="text" ng-model="FirstName" />
+            <input type="text" ng-model="MiddleName" />
+            <input type="text" ng-model="LastName" />
+            First Name : {{FirstName}} <br />
+            Middle Name: {{MiddleName}}<br />
+            LastName:    {{LastName}}
+        </div>
+
+
+        <div>
+            <table ng-controller="myCtrlForclick">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Like</th>
+                        <th>Dislike</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="technology in technologies">
+                        <td>{{technology.Name}}</td>
+                        <td>{{technology.likes}}</td>
+                        <td>{{technology.dislike}}</td>
+                        <td>
+                            <input type="button" name="btnlike" value="Like" ng-click="incrementLike(technology)" />
+                        </td>
+                        <td>
+                            <input type="button" name="btndislike" value="Dislike" ng-click="incrementDislike(technology)" />
+                        </td> 
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-controller="CountryController">
+
+               
+                <select ng-model="selectedName" ng-options=" c.Name for c in Country" ng-change="fn(selectedName.Name)"></select>
+                <h1>
+                    you have selected {{selectedName.Name}}
+                </h1>
+                    <div ng-repeat=" c in Country">
+             <fieldset>
+                            <legend>{{c.Name}} </legend>
+
+                            <ul ng-repeat=" c1 in c.City">
+                                <li ng-show="ttt"> {{c1}}</li>
+                            </ul>
+                        </fieldset>
+                    </div>
+
+
+                </div>
+        </div>
+       
+    </div>
+    <div id="dvCountry"></div>
+   
+    <script type="text/javascript">
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            $scope.names = [
+                {
+                    name: "Vinay Kumar Pandey",
+                    course:"BBB"
+                },
+                {
+                    name: "Amit Kumar Pandey",
+                    course: "MBBB"
+                },
+                {
+                    name: "Mohit Kumar Pandey",
+                    course: "MBBBB"
+                }
+            ];
+            $scope.filterClick = function (x) {
+                $scope.ft = x;
+            }
+        });
+        app.controller('myCtrl2', function ($scope) {
+            $scope.FirstName = "Vinay";
+            $scope.MiddleName = "Kumar";
+            $scope.LastName = "Pandey";
+
+        });
+
+        app.controller("myCtrlForclick", function ($scope) {
+
+            var technologies = [
+                 { Name: "C#", likes: 0, dislike: 0 },
+                 { Name: "ASP.net", likes: 0, dislike: 0 },
+                 { Name: "JAVA", likes: 0, dislike: 0 },
+                 { Name: "Python", likes: 0, dislike: 0 },
+                 { Name: "Ruby&&Rail", likes: 0, dislike: 0 }
+            ];
+            $scope.technologies = technologies;
+            $scope.incrementLike = function (technology) { technology.likes++}
+            $scope.incrementDislike = function (technology) { technology.dislike++}
+        });
+
+        app.controller("CountryController", function ($scope) {
+
+            var Country= [
+            {Name :"India", City : ["Mumbai","Rewa","Delhi","Vanarasi","KolKata","Jaipur"]},
+             {Name :"Nepal", City : ["Kathmandu","Sirsa","Janakpur"]},
+              {Name :"USA", City : ["LosBegass","New Jersey","New York"]},
+               {Name :"Japan", City : ["Tokyo","Osaka","Nagoya"]}
+            ];
+            $scope.Country = Country;
+        });
+        //$(document).ready(function () {
+        //    debugger;
+        //    var Country = [
+        //   { Name: "India", City: ["Mumbai", "Rewa", "Delhi", "Vanarasi", "KolKata", "Jaipur"] },
+        //    { Name: "Nepal", City: ["Kathmandu", "Sirsa", "Janakpur"] },
+        //     { Name: "USA", City: ["LosBegass", "New Jersey", "New York"] },
+        //      { Name: "Japan", City: ["Tokyo", "Osaka", "Nagoya"] }
+        //    ];
+          
+        //    $("#dvCountry").jstree({
+        //        "plugins": ["checkbox"],
+        //        "checkbox": { "three_state": false },
+        //        'core': {
+        //            'check_callback': true,
+        //            'data': Country,
+        //            "themes": {
+        //                "icons": false
+        //            }
+        //        }
+
+        //    });
+        //});
+            
+    </script>
+
+    @*<script type="text/javascript">
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            $scope.name = "Vinay Kumar Pandey";
+        });
+    </script>*@
+
+</body>
+
+
+    </html>
+
+
+
+
+
+
